@@ -1,0 +1,88 @@
+#include <stdio.h>
+
+#define MAX_VERTICES 10
+
+// Function to initialize the adjacency matrix
+void initializeGraph(int graph[][MAX_VERTICES], int numVertices) {
+    int i, j;
+    for (i = 0; i < numVertices; i++) {
+        for (j = 0; j < numVertices; j++) {
+            graph[i][j] = 0;
+        }
+    }
+}
+
+// Function to add an edge between two vertices
+void addEdge(int graph[][MAX_VERTICES], int numVertices, int src, int dest) {
+    if (src >= 0 && src < numVertices && dest >= 0 && dest < numVertices) {
+        graph[src][dest] = 1;
+        graph[dest][src] = 1;
+    }
+}
+
+// Function to display the adjacency matrix
+void displayGraph(int graph[][MAX_VERTICES], int numVertices) {
+    int i, j;
+    for (i = 0; i < numVertices; i++) {
+        for (j = 0; j < numVertices; j++) {
+            printf("%d ", graph[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Function to calculate the degree of each vertex
+void calculateVertexDegree(int graph[][MAX_VERTICES], int numVertices, int degrees[]) {
+    int i, j;
+    for (i = 0; i < numVertices; i++) {
+        int degree = 0;
+        for (j = 0; j < numVertices; j++) {
+            if (graph[i][j] == 1) {
+                degree++;
+            }
+        }
+        degrees[i] = degree;
+    }
+}
+
+// Function to display the degree of each vertex
+void displayVertexDegree(int degrees[], int numVertices) {
+    int i;
+    for (i = 0; i < numVertices; i++) {
+        printf("Vertex %d: Degree %d\n", i, degrees[i]);
+    }
+}
+
+int main() {
+    int graph[MAX_VERTICES][MAX_VERTICES];
+    int numVertices, i, j;
+
+    printf("Enter the number of vertices (maximum 10): ");
+    scanf("%d", &numVertices);
+
+    // Initialize the graph
+    initializeGraph(graph, numVertices);
+
+    // Add edges
+    addEdge(graph, numVertices, 0, 1);
+    addEdge(graph, numVertices, 0, 2);
+    addEdge(graph, numVertices, 1, 3);
+    addEdge(graph, numVertices, 2, 3);
+    addEdge(graph, numVertices, 2, 4);
+    addEdge(graph, numVertices, 3, 4);
+    addEdge(graph, numVertices, 3, 5);
+
+    // Display the adjacency matrix
+    printf("Adjacency Matrix:\n");
+    displayGraph(graph, numVertices);
+
+    // Calculate the degree of each vertex
+    int degrees[MAX_VERTICES];
+    calculateVertexDegree(graph, numVertices, degrees);
+
+    // Display the degree of each vertex
+    printf("Vertex Degrees:\n");
+    displayVertexDegree(degrees, numVertices);
+
+    return 0;
+}
